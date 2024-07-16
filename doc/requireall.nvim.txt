@@ -1,0 +1,108 @@
+*requireall.nvim.txt*
+
+==============================================================================
+Lua module: requireall                            *requireall.nvim-requireall*
+
+list({opts})                                               *requireall.list()*
+  List require() call in source.
+
+  Parameters: ~
+    {opts} (RequireallListOption?) 
+
+  Return: ~
+    (RequireallList) 
+
+execute({opts})                                         *requireall.execute()*
+  Execute require() in source and its path.
+
+  Parameters: ~
+    {opts} (RequireallExecuteOption?) 
+
+==============================================================================
+STRUCTURE                                          *requireall.nvim-STRUCTURE*
+
+RequireallListOption                                    *RequireallListOption*
+
+- {paths} ((fun():string[])?) find require() call from these lua file path (default: find non-test lua files under working directory recursively)
+- {sources} ((fun():string[])?) find require() call from these lua source code
+
+RequireallList                                                *RequireallList*
+
+- {path} (string?) file path (not nil if specified by option)
+- {source} (string) lua source code
+- {matches} (RequireallMatch[])
+
+RequireallMatch                                              *RequireallMatch*
+
+- {node} (TSNode) require() call node
+- {name_node} (TSNode) require() argument node
+- {name} (string?) require() argument string (not nil if it is static string)
+
+RequireallExecuteOption                              *RequireallExecuteOption*
+
+- {paths} ((fun():string[])?) find require() call from these lua file path
+- {sources} ((fun():string[])?) find require() call from these lua source code
+- {module_filter} ((fun(module_path:string):boolean)?) call require(module_path) if returns true
+- {exit} ((fun(has_error:boolean))?) function called on finished (default: exit nvim with status code)
+
+==============================================================================
+EXAMPLES                                            *requireall.nvim-EXAMPLES*
+
+>
+  require("requireall").execute({
+    paths = function()
+      return {
+        "./lua/requireall/test/data/example.lua",
+      }
+    end,
+    module_filter = function(module_path)
+      if module_path:find("%.test%.helper") then
+        return false
+      end
+      return true
+    end,
+  })
+<
+
+>
+  [requireall] path: lua/requireall/test/data/example.lua
+  [requireall] calling require(): requireall.test.data.example
+  [requireall] calling require(): requireall.invalid
+  module 'requireall.invalid' not found:
+  	no field package.preload['requireall.invalid']
+  	no file './requireall/invalid.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/luajit-2.1/requireall/invalid.lua'
+  	no file '/usr/local/share/lua/5.1/requireall/invalid.lua'
+  	no file '/usr/local/share/lua/5.1/requireall/invalid/init.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/lua/5.1/requireall/invalid.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/lua/5.1/requireall/invalid/init.lua'
+  	no file './requireall/invalid.so'
+  	no file '/usr/local/lib/lua/5.1/requireall/invalid.so'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall/invalid.so'
+  	no file '/usr/local/lib/lua/5.1/loadall.so'
+  	no file './requireall.so'
+  	no file '/usr/local/lib/lua/5.1/requireall.so'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall.so'
+  	no file '/usr/local/lib/lua/5.1/loadall.so'
+  [requireall] calling require(): requireall
+  [requireall] errors (count: 1)
+  require("requireall.invalid"): module 'requireall.invalid' not found:
+  	no field package.preload['requireall.invalid']
+  	no file './requireall/invalid.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/luajit-2.1/requireall/invalid.lua'
+  	no file '/usr/local/share/lua/5.1/requireall/invalid.lua'
+  	no file '/usr/local/share/lua/5.1/requireall/invalid/init.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/lua/5.1/requireall/invalid.lua'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/share/lua/5.1/requireall/invalid/init.lua'
+  	no file './requireall/invalid.so'
+  	no file '/usr/local/lib/lua/5.1/requireall/invalid.so'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall/invalid.so'
+  	no file '/usr/local/lib/lua/5.1/loadall.so'
+  	no file './requireall.so'
+  	no file '/usr/local/lib/lua/5.1/requireall.so'
+  	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall.so'
+  	no file '/usr/local/lib/lua/5.1/loadall.so'
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help
