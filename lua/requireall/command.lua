@@ -98,8 +98,8 @@ function M.execute(raw_opts)
       end)
   end)
 
-  local has_error = #errors > 0
-  if has_error then
+  local ok = #errors == 0
+  if not ok then
     vim.notify(
       ("[requireall] errors (count: %d)\n%s"):format(
         #errors,
@@ -114,7 +114,7 @@ function M.execute(raw_opts)
     )
   end
 
-  opts.exit(has_error)
+  opts.exit(ok)
 end
 
 return M

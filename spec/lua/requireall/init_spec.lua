@@ -74,13 +74,17 @@ require("requireall.test.data.success")
 ]=]
     )
 
+    local got_ok
     requireall.execute({
       paths = function()
         return { path }
       end,
-      exit = function() end,
+      exit = function(ok)
+        got_ok = ok
+      end,
     })
 
+    assert.equals(true, got_ok)
     assert.equals(true, _G._success)
   end)
 
@@ -102,13 +106,17 @@ require("requireall.test.data.success")
 ]=]
     )
 
+    local got_ok
     requireall.execute({
       paths = function()
         return { path }
       end,
-      exit = function() end,
+      exit = function(ok)
+        got_ok = ok
+      end,
     })
 
+    assert.equals(false, got_ok)
     assert.equals(true, _G._success)
     assert.is_same({
       "[requireall] path: " .. helper.test_data:relative_path("test.lua"),
