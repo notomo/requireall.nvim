@@ -128,6 +128,7 @@ require("requireall.test.data.success")
       [=[[requireall] errors (count: 2)
 require("requireall.test.data.error1"): error1
 require("requireall.test.data.error2"): error2]=],
+      "",
     }, messages)
   end)
 
@@ -155,6 +156,7 @@ require("requireall")
     assert.is_same({
       [[[requireall] source: require("requireall") ...]],
       [[[requireall] calling require(): requireall]],
+      "",
     }, messages)
   end)
 end)

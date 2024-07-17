@@ -114,6 +114,8 @@ function M.execute(raw_opts)
     )
   end
 
+  vim.notify("", vim.log.levels.INFO)
+
   opts.exit(ok)
 end
 

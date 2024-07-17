@@ -32,7 +32,9 @@ require("genvdoc").generate(full_plugin_name, {
     {
       name = "EXAMPLES",
       body = function()
-        return util.help_code_block_from_file(example_path) .. "\n\n" .. util.help_code_block(example_output)
+        return util.help_code_block_from_file(example_path, { language = "lua" })
+          .. "\n\n"
+          .. util.help_code_block(example_output)
       end,
     },
   },

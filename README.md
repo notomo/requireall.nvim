@@ -77,4 +77,5 @@ require("requireall.invalid"): module 'requireall.invalid' not found:
 	no file '/usr/local/lib/lua/5.1/requireall.so'
 	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall.so'
 	no file '/usr/local/lib/lua/5.1/loadall.so'
+
 ```
