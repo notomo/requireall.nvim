@@ -5,6 +5,7 @@ local full_plugin_name = plugin_name .. ".nvim"
 local example_path = ("./spec/lua/%s/example.lua"):format(plugin_name)
 local job = vim.system({ "nvim", "--headless", ("+luafile %s"):format(example_path) }, { text = true }):wait()
 local example_output = job.stderr
+local exit_code = job.code
 
 require("genvdoc").generate(full_plugin_name, {
   source = { patterns = { ("lua/%s/init.lua"):format(plugin_name) } },
@@ -53,6 +54,7 @@ Test `require()` calls that are included in source code.
 
 ## Example
 
+%s
 ```lua
 %s```
 
@@ -61,8 +63,20 @@ Test `require()` calls that are included in source code.
 %s```
 
 ```
+$ nvim --headless +'luafile %s'
 %s
-```]]):format(full_plugin_name, exmaple, target_path, target_file, example_output)
+$ echo $?
+%s
+```]]):format(
+    full_plugin_name,
+    example_path,
+    exmaple,
+    target_path,
+    target_file,
+    example_path,
+    example_output,
+    exit_code
+  )
 
   util.write("README.md", content)
 end

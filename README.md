@@ -4,6 +4,7 @@ Test `require()` calls that are included in source code.
 
 ## Example
 
+./spec/lua/requireall/example.lua
 ```lua
 require("requireall").execute({
   paths = function()
@@ -40,6 +41,7 @@ return M
 ```
 
 ```
+$ nvim --headless +'luafile ./spec/lua/requireall/example.lua'
 [requireall] path: lua/requireall/test/data/example.lua
 [requireall] calling require(): requireall.test.data.example
 [requireall] calling require(): requireall.invalid
@@ -78,4 +80,6 @@ require("requireall.invalid"): module 'requireall.invalid' not found:
 	no file '/home/notomo/workspace/neovim/.deps/usr/lib/lua/5.1/requireall.so'
 	no file '/usr/local/lib/lua/5.1/loadall.so'
 
+$ echo $?
+1
 ```
