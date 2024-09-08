@@ -1,5 +1,6 @@
 local helper = require("requireall.test.helper")
 local requireall = helper.require("requireall")
+local assert = require("assertlib").typed(assert)
 
 describe("requireall.list()", function()
   before_each(helper.before_each)
@@ -19,14 +20,14 @@ require("requireall")
       end,
     })
 
-    assert.equals(path, got[1].path)
-    assert.equals(
+    assert.equal(path, got[1].path)
+    assert.equal(
       [=[
 require("requireall")
 ]=],
       got[1].source
     )
-    assert.equals("requireall", got[1].matches[1].name)
+    assert.equal("requireall", got[1].matches[1].name)
   end)
 
   it("can use string sources", function()
@@ -44,13 +45,13 @@ require("requireall")
     })
 
     assert.is_nil(got[1].path)
-    assert.equals(
+    assert.equal(
       [=[
 require("requireall")
 ]=],
       got[1].source
     )
-    assert.equals("requireall", got[1].matches[1].name)
+    assert.equal("requireall", got[1].matches[1].name)
   end)
 end)
 
@@ -84,8 +85,8 @@ require("requireall.test.data.success")
       end,
     })
 
-    assert.equals(true, got_ok)
-    assert.equals(true, _G._success)
+    assert.equal(true, got_ok)
+    assert.equal(true, _G._success)
   end)
 
   it("show errors", function()
@@ -116,9 +117,9 @@ require("requireall.test.data.success")
       end,
     })
 
-    assert.equals(false, got_ok)
-    assert.equals(true, _G._success)
-    assert.is_same({
+    assert.equal(false, got_ok)
+    assert.equal(true, _G._success)
+    assert.same({
       "[requireall] path: " .. helper.test_data:relative_path("test.lua"),
       "[requireall] calling require(): requireall.test.data.error1",
       "error1",
@@ -153,7 +154,7 @@ require("requireall")
       exit = function() end,
     })
 
-    assert.is_same({
+    assert.same({
       [[[requireall] source: require("requireall") ...]],
       [[[requireall] calling require(): requireall]],
       "",
