@@ -3,6 +3,7 @@ local M = {}
 local default_list_opts = {
   paths = function()
     local working_dir = vim.uv.cwd()
+    assert(working_dir, "curret working directory must not be nil")
     return vim
       .iter(vim.fs.dir(working_dir, {
         depth = 100,
