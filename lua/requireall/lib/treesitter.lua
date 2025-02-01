@@ -2,7 +2,7 @@ local M = {}
 
 function M.get_first_tree_root(str, language)
   local parser = vim.treesitter.get_string_parser(str, language)
-  local trees = parser:parse()
+  local trees = assert(parser:parse())
   return trees[1]:root()
 end
 
