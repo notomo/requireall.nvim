@@ -122,7 +122,7 @@ require("requireall.test.data.success")
     assert.equal(false, got_ok)
     assert.equal(true, _G._success)
     assert.same({
-      "[requireall] path: " .. helper.test_data:relative_path("test.lua"),
+      "[requireall] path: " .. vim.fn.fnamemodify(path, ":."),
       "[requireall] calling require(): requireall.test.data.error1",
       "error1",
       "[requireall] calling require(): requireall.test.data.error2",
