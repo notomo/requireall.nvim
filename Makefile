@@ -1,4 +1,5 @@
-include spec/.shared/neovim-plugin.mk
+WORKFLOW_DIR ?= spec/.shared
+include $(WORKFLOW_DIR)/neovim-plugin.mk
 
 export REQUIREALL_IGNORE_MODULES:=requireall%.invalid
 export DEPS_SKIP_REQUIREALL:=1
